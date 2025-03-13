@@ -7,3 +7,20 @@ const getComputerChoice = () => {
 	// Return the choice at the random index
 	return choices[randomIndex];
 };
+
+// 2. The logic to get the human choice
+const getHumanChoice = () => {
+	const userInput = prompt('Your choice');
+	if (!userInput)
+		return alert(
+			'Please make your choice again, the entry should not be empty',
+		);
+	if (
+		userInput.toLowerCase() !== 'rock' &&
+		userInput.toLowerCase() !== 'paper' &&
+		userInput.toLowerCase() !== 'scissors'
+	) {
+		alert('You should introduce rock, scissors or paper');
+	}
+	return userInput;
+};
