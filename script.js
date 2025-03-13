@@ -1,7 +1,3 @@
-// 3. Declare the players score variables
-let humanScore = 0;
-let computerScore = 0;
-
 // 1. The logic to get the computer choice
 const getComputerChoice = () => {
 	// Array of choices
@@ -28,36 +24,60 @@ const getHumanChoice = () => {
 	return userInput;
 };
 
-// 4. Write the logic to play a single round
-const playRound = (computerChoice, humanChoice) => {
-	const winConditions = {
-		rock: 'scissors',
-		paper: 'rock',
-		scissors: 'paper',
+// 5. The logic to play the entire game
+
+const playGame = () => {
+	// 3. Declare the players score variables
+	let humanScore = 0;
+	let computerScore = 0;
+
+	// 4. Write the logic to play a single round
+	const playRound = () => {
+		const computerChoice = getComputerChoice();
+		const humanChoice = getHumanChoice();
+
+		// An object containing winning cases
+		const winConditions = {
+			rock: 'scissors',
+			paper: 'rock',
+			scissors: 'paper',
+		};
+
+		if (humanChoice === computerChoice) {
+			console.log('Draw!');
+		} else if (winConditions[humanChoice] === computerChoice) {
+			// The key is the user input and the value is the computer's choice
+			console.log(
+				`You Win! ${
+					humanChoice.charAt(0).toUpperCase() + humanChoice.slice(1)
+				} beats ${
+					computerChoice.charAt(0).toUpperCase() + computerChoice.slice(1)
+				}`,
+			);
+			humanScore += 1;
+		} else {
+			console.log(
+				`Computer Win! ${
+					computerChoice.charAt(0).toUpperCase() + computerChoice.slice(1)
+				} beats ${humanChoice.charAt(0).toUpperCase() + humanChoice.slice(1)}`,
+			);
+			computerScore += 1;
+		}
+
+		console.log(`Computer: ${computerChoice}, Human: ${humanChoice}`);
+		console.log(`Computer: ${computerScore}, Human: ${humanScore}`);
 	};
-	if (humanChoice === computerChoice) {
-		console.log('Draw!');
-	} else if (winConditions[humanChoice] === computerChoice) {
-		console.log(
-			`You Win! ${
-				humanChoice.charAt(0).toUpperCase() + humanChoice.slice(1)
-			} beats ${
-				computerChoice.charAt(0).toUpperCase() + computerChoice.slice(1)
-			}`,
-		);
-		humanScore += 1;
-	} else {
-		console.log(
-			`Computer Win! ${
-				computerChoice.charAt(0).toUpperCase() + computerChoice.slice(1)
-			} beats ${humanChoice.charAt(0).toUpperCase() + humanChoice.slice(1)}`,
-		);
-		computerScore += 1;
+	let times = 5;
+	while (times > 0) {
+		playRound();
+		times--;
 	}
 
-	console.log(`Computer: ${computerChoice}, Human: ${humanChoice}`);
-	console.log(`Computer: ${computerScore}, Human: ${humanScore}`);
+	console.log(
+		`After 5 rounds wins: ${
+			humanScore > computerScore ? 'Human' : 'Computer'
+		}!`,
+	);
 };
-const computerSelection = getComputerChoice();
-const humanSelection = getHumanChoice();
-playRound(computerSelection, humanSelection);
+
+playGame();
